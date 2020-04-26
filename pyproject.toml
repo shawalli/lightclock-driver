@@ -8,6 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.7"
 blinkt = "^0.1.2"
+arrow = "^0.15.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.1"
