@@ -73,7 +73,7 @@ class Database:
         current_time: Arrow = now()
 
         for event in self.events:
-            if event.start_time > current_time:
+            if ((event.start_time.hour > current_time.hour) or (event.start_time.minute > current_time.minute) or (event.start_time.second > current_time.second)):
                 continue
 
             if event.end_time <= current_time:
@@ -84,7 +84,7 @@ class Database:
         return None
 
 
-def init():
+def init() -> Database:
     db = Database()
 
     db.create_event(
@@ -133,6 +133,8 @@ def init():
         color=Colors.OFF,
     )
 
+    return db
+
 
 def main():
     db = init()
@@ -140,7 +142,10 @@ def main():
     while True:
         time.sleep(30)
         evt = db.find_current_event()
-        blinkt.set_all(evt.R, evt.G, rgb.B, 0.5)
+        if evt is not None:
+            blinkt.set_all(evt.R, evt.G, rgb.B, 0.5)
+        else:
+            blink.clear()
         # evt
 
 
